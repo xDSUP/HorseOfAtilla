@@ -10,7 +10,7 @@ public class BoardTest
 	@Test
 	void testFromWithNormalFigures()
 	{
-		Board board = Board.from(8, 8, "" +
+		Board board = Board.from("" +
 				"12345678\n" +
 				"12345678\n" +
 				"123K5678\n" +
@@ -19,7 +19,7 @@ public class BoardTest
 				"12345678\n" +
 				"12345678\n" +
 				"12345678");
-		assertEquals(Utils.toChessNotation(board.getFigures()[2][3].getCoords()), "D6");
-		assertEquals(Utils.toChessNotation(board.getFigures()[4][4].getCoords()), "E4");
+		assertEquals(Utils.toChessNotation(board.getKnight().getCoords()), "D6");
+		assertEquals(Utils.toChessNotation(board.getKing().getCoords()), "E4");
 	}
 }

@@ -15,4 +15,8 @@ public class Utils
 	public static String toChessNotation(Coord coord){
 		return toChessNotation(coord.getX(), coord.getY());
 	}
+
+	public static String toStrArray(String chessNotation){
+		return "\"" + chessNotation.replace("-", "\", \"")+ "\"";
+	}
 }

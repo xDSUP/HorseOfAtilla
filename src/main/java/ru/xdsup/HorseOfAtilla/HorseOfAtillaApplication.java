@@ -8,7 +8,7 @@ import ru.xdsup.HorseOfAtilla.core.Board;
 public class HorseOfAtillaApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(HorseOfAtillaApplication.class, args);
-		Board.from(8,8 , "" +
+		Board.from("" +
 				"12345678" +
 				"12345678" +
 				"123K5678" +
