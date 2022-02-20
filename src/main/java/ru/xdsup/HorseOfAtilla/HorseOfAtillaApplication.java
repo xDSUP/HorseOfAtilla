@@ -8,15 +8,6 @@ import ru.xdsup.HorseOfAtilla.core.Board;
 public class HorseOfAtillaApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(HorseOfAtillaApplication.class, args);
-		Board.from("" +
-				"12345678" +
-				"12345678" +
-				"123K5678" +
-				"12345678" +
-				"1234W678" +
-				"12345678" +
-				"12345678" +
-				"12345678");
 	}
 
 }

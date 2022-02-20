@@ -1,6 +1,6 @@
-package ru.xdsup.HorseOfAtilla.core;
+package ru.xdsup.HorseOfAtilla;
 
-import java.nio.charset.CoderResult;
+import ru.xdsup.HorseOfAtilla.core.figures.Coord;
 
 public class Utils
 {

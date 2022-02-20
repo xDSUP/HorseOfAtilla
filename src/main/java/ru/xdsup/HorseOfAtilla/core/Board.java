@@ -1,15 +1,18 @@
 package ru.xdsup.HorseOfAtilla.core;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import ru.xdsup.HorseOfAtilla.Utils;
+import ru.xdsup.HorseOfAtilla.core.figures.Coord;
+import ru.xdsup.HorseOfAtilla.core.figures.Figure;
+import ru.xdsup.HorseOfAtilla.core.figures.King;
+import ru.xdsup.HorseOfAtilla.core.figures.Knight;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.HashMap;
-import javafx.scene.control.Skin;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import sun.text.normalizer.UTF16;
 
 @Getter
 @Setter
