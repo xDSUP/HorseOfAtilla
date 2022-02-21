@@ -106,14 +106,20 @@ $(document).ready(function () {
       initPiece(figures.fire, position);
     });
 
-    json.path.forEach((step, number) => {
-      if (number < currentPos)
-        initPiece(figures.fire, step);
-      else if (number === currentPos)
-        initPiece(figures.horse, step);
-      else if (step === json.king)
-        initPiece(figures.king, step);
-    });
+    if(currentPos == 0){
+      initPiece(figures.horse, json.horseStartPostiton);
+      initPiece(figures.king, json.king);
+    }
+    else{
+      json.path.forEach((step, number) => {
+        if (number < currentPos)
+          initPiece(figures.fire, step);
+        else if (number === currentPos)
+          initPiece(figures.horse, step);
+        else if (step === json.king)
+          initPiece(figures.king, step);
+      });
+    }
   }
 
   let backStep = () => {
@@ -134,11 +140,26 @@ $(document).ready(function () {
     var target = $(event.currentTarget);
     var id = target.find(".identifier").text();
     if (event.which == 1) {
-      json.fire.push(id);
+      switch (activeFigure) {
+        case figures.horse:
+          json.horseStartPostiton = id;
+          break;
+        case figures.king:
+          json.king = id;
+          break;
+        case figures.fire:
+          json.fire.push(id);
+          break;
+      }
       refresh();
+
     } else {
-      //nextStep();
+      json.fire = json.fire.filter(function(elem){
+        return elem != id;
+      })
+      refresh();
     }
+    refresh();
   }
 
   $("#backStep").click(backStep);
