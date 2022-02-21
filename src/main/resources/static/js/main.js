@@ -1,3 +1,15 @@
+var json = {
+  "fire": [
+    "A1",
+    "A2"
+  ],
+  "king": "B3",
+  "path": [
+    "G4", "H6", "F7", "D6", "B5", "A3", "B1", "D2", "B3", "A5", "C6", "E7", "G6", "F8", "E6", "G7", "E8", "F6", "G4", "E3", "G4"
+  ],
+  "horseStartPostiton": "H1"
+}
+
 $(document).ready(function () {
   $(this).bind("contextmenu", function (e) {
     e.preventDefault();
@@ -19,16 +31,7 @@ $(document).ready(function () {
 
   let activeFigure = figures.horse;
 
-  var json = {
-    "fire": [
-      "A1",
-      "A2"
-    ],
-    "king": "B3",
-    "path": [
-      "G4", "H6", "F7", "D6", "B5", "A3", "B1", "D2", "B3", "A5", "C6", "E7", "G6", "F8", "E6", "G7", "E8", "F6", "G4", "E3", "G4"
-    ]
-  }
+
 
   /** Cоздает доску
    */
@@ -96,10 +99,6 @@ $(document).ready(function () {
     });
   }
 
-  /*$(".getSolve").onclick((event)=>{
-    let serverUrl = location.g
-  });*/
-
   var refresh = () => {
     initBoard();
     renderPath(json.path);
@@ -117,21 +116,48 @@ $(document).ready(function () {
     });
   }
 
+  let backStep = () => {
+    if (currentPos !== 0) {
+      currentPos--;
+      refresh();
+    }
+  }
+
+  let nextStep = () => {
+    if (currentPos !== json.path.length - 1) {
+      currentPos++;
+      refresh();
+    }
+  }
+
   function clickHandler(event) {
     var target = $(event.currentTarget);
     var id = target.find(".identifier").text();
     if (event.which == 1) {
-      if (currentPos !== 0) {
-        currentPos--;
-        refresh();
-      }
+      json.fire.push(id);
+      refresh();
     } else {
-      if (currentPos !== json.path.length - 1) {
-        currentPos++;
-        refresh();
-      }
+      //nextStep();
     }
   }
+
+  $("#backStep").click(backStep);
+  $("#nextStep").click(nextStep);
+  $("#getSolve").click(() => {
+    $.ajax("http://localhost:8080/atilla", {
+      method: 'post',
+      contentType: 'application/json',
+      dataType: 'json',
+      data: JSON.stringify({fire: json.fire, king: json.king, horse: json.horseStartPostiton}),
+      success: function(data){
+        json.path = data.path;
+        refresh();
+      }
+    })
+  });
+  $("#fire").click(() => activeFigure = figures.fire);
+  $("#horse").click(() => activeFigure = figures.horse);
+  $("#king").click(() => activeFigure = figures.king);
 
   refresh();
 });
