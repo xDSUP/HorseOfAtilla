@@ -1,21 +1,16 @@
 package ru.xdsup.HorseOfAtilla.controllers;
 
-import lombok.val;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 import ru.xdsup.HorseOfAtilla.core.Board;
 import ru.xdsup.HorseOfAtilla.dto.AtillaRequest;
 import ru.xdsup.HorseOfAtilla.services.AtillaService;
 import ru.xdsup.HorseOfAtilla.services.AtillaServiceFactory;
 
-import javax.annotation.PostConstruct;
-
-@RestController
+@Controller
 public class AtillaController {
 
     private final AtillaServiceFactory factory;
@@ -24,8 +19,14 @@ public class AtillaController {
         this.factory = factory;
     }
 
+    @GetMapping
+    public String get(){
+        return "index";
+    }
+
     @PostMapping(name = "/atilla", consumes = MediaType.APPLICATION_JSON_VALUE, produces =
             MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
     public ResponseEntity<?> simple(@RequestBody AtillaRequest request) {
         // проинициализируйте меня
         Board board = new Board();
