@@ -1,14 +1,25 @@
 package ru.xdsup.HorseOfAtilla.controllers;
 
+import lombok.val;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import ru.xdsup.HorseOfAtilla.Utils;
 import ru.xdsup.HorseOfAtilla.core.Board;
+import ru.xdsup.HorseOfAtilla.core.figures.Coord;
+import ru.xdsup.HorseOfAtilla.core.figures.Figure;
+import ru.xdsup.HorseOfAtilla.core.figures.King;
+import ru.xdsup.HorseOfAtilla.core.figures.Knight;
 import ru.xdsup.HorseOfAtilla.dto.AtillaRequest;
+import ru.xdsup.HorseOfAtilla.dto.AtillaResponse;
 import ru.xdsup.HorseOfAtilla.services.AtillaService;
 import ru.xdsup.HorseOfAtilla.services.AtillaServiceFactory;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.stream.Collectors;
 
 @Controller
 public class AtillaController {
@@ -24,17 +35,22 @@ public class AtillaController {
         return "index";
     }
 
-    @PostMapping(name = "/atilla", consumes = MediaType.APPLICATION_JSON_VALUE, produces =
+    @PostMapping(value = "/atilla", consumes = MediaType.APPLICATION_JSON_VALUE, produces =
             MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<?> simple(@RequestBody AtillaRequest request) {
-        // проинициализируйте меня
+    public ResponseEntity<AtillaResponse> simple(@RequestBody AtillaRequest request) {
         Board board = new Board();
-        //board.setKing();
-        //board.setKnight();
-        //board.setFires();
-        //board.setFires();
+        board.setStartPosition(Utils.toChessNotation(request.getHorse()));
+        board.setKing(new King(Utils.toChessNotation(request.getKing())));
+        board.setKnight(new Knight(Utils.toChessNotation(request.getHorse())));
+        board.setFires(Arrays.stream(request.getFire())
+                .map(Utils::toChessNotation)
+                .collect(Collectors.toMap(entry -> entry, entry -> new Figure((Coord) entry), (prev, next) -> next, HashMap::new)));
         AtillaService service = factory.getService(AtillaService.Mode.QUEUE);
-        return new ResponseEntity<>(service.analyze(board), HttpStatus.OK);
+        val response = new AtillaResponse();
+        response.setKing(request.getKing());
+        response.setFire(request.getFire());
+        response.setPath(Utils.toArray(service.analyze(board)));
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

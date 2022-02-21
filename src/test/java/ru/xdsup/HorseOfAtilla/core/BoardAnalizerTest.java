@@ -25,6 +25,22 @@ public class BoardAnalizerTest
 	}
 
 	@Test
+	public void testSimpleBoard2()
+	{
+		Board board = Board.from("" +
+				"12345678\n" +
+				"12345678\n" +
+				"12345678\n" +
+				"12345678\n" +
+				"12345678\n" +
+				"12345678\n" +
+				"12K45678\n" +
+				"W2345678");
+		AtillaService boardAnalizer = new AtillaService();
+		assertEquals( boardAnalizer.analyze(board), "C2-A1-C2");
+	}
+
+	@Test
 	public void testHardBoard()
 	{
 		Board board = Board.from("" +
