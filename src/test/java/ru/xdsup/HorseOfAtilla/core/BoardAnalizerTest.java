@@ -1,7 +1,8 @@
 package ru.xdsup.HorseOfAtilla.core;
 
-import javax.rmi.CORBA.Util;
 import org.junit.Test;
+import ru.xdsup.HorseOfAtilla.Utils;
+import ru.xdsup.HorseOfAtilla.services.AtillaService;
 
 import static org.junit.Assert.*;
 
@@ -19,8 +20,24 @@ public class BoardAnalizerTest
 				"12345678\n" +
 				"12345678\n" +
 				"12345678");
-		BoardAnalizer boardAnalizer = new BoardAnalizer();
+		AtillaService boardAnalizer = new AtillaService();
 		assertEquals( boardAnalizer.analyze(board), "D6-E4-D6");
+	}
+
+	@Test
+	public void testSimpleBoard2()
+	{
+		Board board = Board.from("" +
+				"12345678\n" +
+				"12345678\n" +
+				"12345678\n" +
+				"12345678\n" +
+				"12345678\n" +
+				"12345678\n" +
+				"12K45678\n" +
+				"W2345678");
+		AtillaService boardAnalizer = new AtillaService();
+		assertEquals( boardAnalizer.analyze(board), "C2-A1-C2");
 	}
 
 	@Test
@@ -35,7 +52,7 @@ public class BoardAnalizerTest
 				"1WFF5F78\n" +
 				"12F4567F\n" +
 				"F2F45F78");
-		BoardAnalizer boardAnalizer = new BoardAnalizer();
+		AtillaService boardAnalizer = new AtillaService();
 		String result = boardAnalizer.analyze(board);
 		System.out.println(result);
 		System.out.println(Utils.toStrArray(result));

@@ -1,4 +1,4 @@
-package ru.xdsup.HorseOfAtilla.core;
+package ru.xdsup.HorseOfAtilla.core.figures;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

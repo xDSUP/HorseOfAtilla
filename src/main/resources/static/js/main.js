@@ -4,24 +4,25 @@ $(document).ready(function () {
   });
 
   var board = [];
-
   var index = {};
   var rows = ['8', '7', '6', '5', '4', '3', '2', '1'];
   var files = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 
   const heatStyleCount = 5;
-
   var currentPos = 0;
 
-  const figures = {
+  const figures = Object.freeze({
     king: 'king',
     horse: 'horse',
     fire: 'fire'
-  }
+  });
+
+  let activeFigure = figures.horse;
+
   var json = {
     "fire": [
-      "a1",
-      "a2"
+      "A1",
+      "A2"
     ],
     "king": "B3",
     "path": [
@@ -94,6 +95,10 @@ $(document).ready(function () {
       val++;
     });
   }
+
+  /*$(".getSolve").onclick((event)=>{
+    let serverUrl = location.g
+  });*/
 
   var refresh = () => {
     initBoard();

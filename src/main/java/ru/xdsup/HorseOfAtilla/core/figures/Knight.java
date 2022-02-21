@@ -1,8 +1,7 @@
-package ru.xdsup.HorseOfAtilla.core;
+package ru.xdsup.HorseOfAtilla.core.figures;
 
 import java.util.ArrayList;
 import java.util.List;
-import javafx.util.Pair;
 
 public class Knight extends Figure
 {

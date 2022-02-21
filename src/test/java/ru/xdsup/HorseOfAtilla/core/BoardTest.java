@@ -1,7 +1,7 @@
 package ru.xdsup.HorseOfAtilla.core;
 
-import org.assertj.core.api.Assert;
 import org.junit.jupiter.api.Test;
+import ru.xdsup.HorseOfAtilla.Utils;
 
 import static org.junit.Assert.*;
 

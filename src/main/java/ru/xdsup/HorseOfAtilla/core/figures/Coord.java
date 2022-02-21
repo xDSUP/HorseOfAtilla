@@ -1,9 +1,10 @@
-package ru.xdsup.HorseOfAtilla.core;
+package ru.xdsup.HorseOfAtilla.core.figures;
 
 import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import ru.xdsup.HorseOfAtilla.Utils;
 
 @AllArgsConstructor
 @Getter
