@@ -1,6 +1,5 @@
 package ru.xdsup.HorseOfAtilla.core;
 
-import javax.rmi.CORBA.Util;
 import org.junit.Test;
 import ru.xdsup.HorseOfAtilla.Utils;
 import ru.xdsup.HorseOfAtilla.services.AtillaService;

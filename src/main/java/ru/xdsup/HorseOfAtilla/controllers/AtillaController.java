@@ -1,5 +1,7 @@
 package ru.xdsup.HorseOfAtilla.controllers;
 
+import lombok.val;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +24,7 @@ public class AtillaController {
         this.factory = factory;
     }
 
-    @PostMapping("/atilla", consumes = MediaType.APPLICATION_JSON_VALUE, produces =
+    @PostMapping(name = "/atilla", consumes = MediaType.APPLICATION_JSON_VALUE, produces =
             MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> simple(@RequestBody AtillaRequest request) {
         // проинициализируйте меня
@@ -32,6 +34,6 @@ public class AtillaController {
         //board.setFires();
         //board.setFires();
         AtillaService service = factory.getService(AtillaService.Mode.QUEUE);
-        return new ResponseEntity<>(service.analyze(board), 200);
+        return new ResponseEntity<>(service.analyze(board), HttpStatus.OK);
     }
 }

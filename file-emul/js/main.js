@@ -21,8 +21,8 @@ $(document).ready(function () {
 
   var json = {
     "fire": [
-      "a1",
-      "a2"
+      "A1",
+      "A2"
     ],
     "king": "B3",
     "path": [
@@ -96,9 +96,9 @@ $(document).ready(function () {
     });
   }
 
-  $(".getSolve").onclick((event)=>{
+  /*$(".getSolve").onclick((event)=>{
     let serverUrl = location.g
-  });
+  });*/
 
   var refresh = () => {
     initBoard();
