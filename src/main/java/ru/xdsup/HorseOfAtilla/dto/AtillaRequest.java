@@ -7,4 +7,5 @@ public class AtillaRequest {
     String[] fire;
     String king;
     String horse;
+    String findType;
 }

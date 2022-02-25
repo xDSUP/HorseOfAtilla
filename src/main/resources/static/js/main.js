@@ -7,7 +7,8 @@ let json = {
   "path": [
     "D7", "F8", "G6", "H4", "G2", "E1", "F3", "E5", "D7"
   ],
-  "horseStartPostiton": "D7"
+  "horseStartPostiton": "D7",
+  "findType": "stack"
 }
 
 $(document).ready(function () {
@@ -164,9 +165,8 @@ $(document).ready(function () {
     refresh();
   }
 
-  $("#backStep").click(backStep);
-  $("#nextStep").click(nextStep);
-  $("#getSolve").click(() => {
+  let getSolve = () => {
+    $(".state").html("loading");
     $.ajax("http://localhost:8080/atilla", {
       method: 'post',
       contentType: 'application/json',
@@ -174,6 +174,7 @@ $(document).ready(function () {
       data: JSON.stringify({fire: json.fire, king: json.king, horse: json.horseStartPostiton}),
       success: function(data){
         json.path = data.path;
+        $(".state").html(`Success! Time: ${data.nanoTime} nanosec.`);
         refresh();
       },
       statusCode: {
@@ -183,6 +184,17 @@ $(document).ready(function () {
         }
       }
     })
+  }
+
+  $("#backStep").click(backStep);
+  $("#nextStep").click(nextStep);
+  $("#getSolveStack").click(() => {
+    json.findType = "stack";
+    getSolve();
+  });
+  $("#getSolveQueue").click(() => {
+    json.findType = "queue";
+    getSolve();
   });
   $("#fire").click(() => activeFigure = figures.fire);
   $("#horse").click(() => activeFigure = figures.horse);
