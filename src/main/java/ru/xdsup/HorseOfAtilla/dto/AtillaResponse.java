@@ -7,4 +7,5 @@ public class AtillaResponse {
     String[] fire;
     String king;
     String[] path;
+    Long nanoTime;
 }

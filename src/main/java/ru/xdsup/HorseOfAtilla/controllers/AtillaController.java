@@ -1,6 +1,7 @@
 package ru.xdsup.HorseOfAtilla.controllers;
 
 import lombok.val;
+import org.apache.commons.lang3.time.StopWatch;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -46,11 +47,15 @@ public class AtillaController {
         board.setFires(Arrays.stream(request.getFire())
                 .map(Utils::toChessNotation)
                 .collect(Collectors.toMap(entry -> entry, entry -> new Figure((Coord) entry), (prev, next) -> next, HashMap::new)));
-        AtillaService service = factory.getService(AtillaService.Mode.QUEUE);
+        AtillaService service = "queue".equals(request.getFindType()) ? factory.getService(AtillaService.Mode.QUEUE) : factory.getService(AtillaService.Mode.STACK);
         val response = new AtillaResponse();
         response.setKing(request.getKing());
         response.setFire(request.getFire());
+        val stopwatch = new StopWatch();
+        stopwatch.start();
         response.setPath(Utils.toArray(service.analyze(board)));
+        stopwatch.stop();
+        response.setNanoTime(stopwatch.getNanoTime());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

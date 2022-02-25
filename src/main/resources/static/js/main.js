@@ -1,13 +1,14 @@
-var json = {
+let json = {
   "fire": [
     "A1",
     "A2"
   ],
-  "king": "B3",
+  "king": "G2",
   "path": [
-    "G4", "H6", "F7", "D6", "B5", "A3", "B1", "D2", "B3", "A5", "C6", "E7", "G6", "F8", "E6", "G7", "E8", "F6", "G4", "E3", "G4"
+    "D7", "F8", "G6", "H4", "G2", "E1", "F3", "E5", "D7"
   ],
-  "horseStartPostiton": "H1"
+  "horseStartPostiton": "D7",
+  "findType": "stack"
 }
 
 $(document).ready(function () {
@@ -15,13 +16,13 @@ $(document).ready(function () {
     e.preventDefault();
   });
 
-  var board = [];
-  var index = {};
-  var rows = ['8', '7', '6', '5', '4', '3', '2', '1'];
-  var files = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+  let board = [];
+  let index = {};
+  let rows = ['8', '7', '6', '5', '4', '3', '2', '1'];
+  let files = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 
   const heatStyleCount = 5;
-  var currentPos = 0;
+  let currentPos = 0;
 
   const figures = Object.freeze({
     king: 'king',
@@ -35,7 +36,7 @@ $(document).ready(function () {
 
   /** Cоздает доску
    */
-  var initBoard = () => {
+  let initBoard = () => {
     board = [];
     tagged = {};
     $('.board').empty();
@@ -45,9 +46,9 @@ $(document).ready(function () {
       var row = $("<div class='row'></div>");
       board[rowId] = [];
 
-      for (var i = 0; i < 8; i++) {
-        var identifier = files[i] + rows[rowId];
-        var newSquare = square
+      for (let i = 0; i < 8; i++) {
+        let identifier = files[i] + rows[rowId];
+        let newSquare = square
           .clone()
           .addClass(identifier)
           .append(`<span class='identifier'>${identifier}</span>`)
@@ -59,7 +60,7 @@ $(document).ready(function () {
       $('.board').append(row);
     }
 
-    for (var i = 0; i < 8; i++) {
+    for (let i = 0; i < 8; i++) {
       addRow(i);
     }
     $(".square").on("mousedown", clickHandler);
@@ -69,10 +70,11 @@ $(document).ready(function () {
    * @param {*} type тип фигуры.
    * @param {*} square клетка.
    */
-  var initPiece = (type, square) => {
+  let initPiece = (type, square) => {
     console.log(type, square);
-    $("." + square).append(`<div class='piece piece-${type}'></div>`);
-    $("." + square).find(".txt").html("&nbsp;");
+    let selectedSquare = $("." + square);
+    selectedSquare.append(`<div class='piece piece-${type}'></div>`);
+    selectedSquare.find(".txt").html("&nbsp;");
   };
 
   /** Закрашивает клетку и пишет в нее цифру
@@ -106,7 +108,7 @@ $(document).ready(function () {
       initPiece(figures.fire, position);
     });
 
-    if(currentPos == 0){
+    if(currentPos === 0){
       initPiece(figures.horse, json.horseStartPostiton);
       initPiece(figures.king, json.king);
     }
@@ -137,11 +139,12 @@ $(document).ready(function () {
   }
 
   function clickHandler(event) {
-    var target = $(event.currentTarget);
-    var id = target.find(".identifier").text();
-    if (event.which == 1) {
+    let target = $(event.currentTarget);
+    let id = target.find(".identifier").text();
+    if (event.which === 1) {
       switch (activeFigure) {
         case figures.horse:
+          currentPos = 0;
           json.horseStartPostiton = id;
           break;
         case figures.king:
@@ -155,16 +158,15 @@ $(document).ready(function () {
 
     } else {
       json.fire = json.fire.filter(function(elem){
-        return elem != id;
+        return elem !== id;
       })
       refresh();
     }
     refresh();
   }
 
-  $("#backStep").click(backStep);
-  $("#nextStep").click(nextStep);
-  $("#getSolve").click(() => {
+  let getSolve = () => {
+    $(".state").html("loading");
     $.ajax("http://localhost:8080/atilla", {
       method: 'post',
       contentType: 'application/json',
@@ -172,9 +174,27 @@ $(document).ready(function () {
       data: JSON.stringify({fire: json.fire, king: json.king, horse: json.horseStartPostiton}),
       success: function(data){
         json.path = data.path;
+        $(".state").html(`Success! Time: ${data.nanoTime} nanosec.`);
         refresh();
+      },
+      statusCode: {
+        500: function(data) {
+          let str = `${data.responseJSON.timestamp}<br><br>${data.status} ${data.responseJSON.error}<br><br>${data.responseJSON.message}<br><br>${data.responseJSON.trace}`;
+          $(".state").html(str);
+        }
       }
     })
+  }
+
+  $("#backStep").click(backStep);
+  $("#nextStep").click(nextStep);
+  $("#getSolveStack").click(() => {
+    json.findType = "stack";
+    getSolve();
+  });
+  $("#getSolveQueue").click(() => {
+    json.findType = "queue";
+    getSolve();
   });
   $("#fire").click(() => activeFigure = figures.fire);
   $("#horse").click(() => activeFigure = figures.horse);
