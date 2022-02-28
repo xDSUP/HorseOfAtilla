@@ -175,6 +175,7 @@ $(document).ready(function () {
       success: function(data){
         json.path = data.path;
         $(".state").html(`Success! Time: ${data.nanoTime} nanosec.`);
+        currentPos = 0;
         refresh();
       },
       statusCode: {
