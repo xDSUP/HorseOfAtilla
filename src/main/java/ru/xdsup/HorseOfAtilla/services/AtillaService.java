@@ -3,15 +3,15 @@ package ru.xdsup.HorseOfAtilla.services;
 import ru.xdsup.HorseOfAtilla.core.Board;
 import ru.xdsup.HorseOfAtilla.core.figures.Knight;
 
-import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.LinkedList;
 
 public class AtillaService
 {
 	public enum Mode {QUEUE, STACK}
 	private final Mode mode;
 
-	private final Deque<Board> potentialStates = new ArrayDeque<>();
+	private final Deque<Board> potentialStates = new LinkedList<>();
 
 	public AtillaService() {
 		this(Mode.QUEUE);
@@ -44,9 +44,9 @@ public class AtillaService
 
 	private Board getPotentialState(){
 		if(mode == Mode.QUEUE)
-			return potentialStates.getLast();
+			return potentialStates.removeLast();
 		else
-			return potentialStates.getFirst();
+			return potentialStates.removeFirst();
 	}
 
 	private void addPotentialState(Board board){
