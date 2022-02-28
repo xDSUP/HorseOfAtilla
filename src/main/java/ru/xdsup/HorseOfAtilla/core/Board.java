@@ -29,6 +29,8 @@ public class Board
 	private HashMap<Coord, Figure> fires = new HashMap<>();
 	private boolean kingDefeated;
 	private String prevMoves;
+	private int moveCount = 0;
+	private static final int MAX_MOVE_COUNT = 18;
 
 	public void addFire(Figure figure){
 		fires.put(figure.getCoords(), figure);
@@ -40,7 +42,7 @@ public class Board
 	}
 
 	public boolean isAvailableMove(Coord coord){
-		return isAvailableCoord(coord) && !fires.containsKey(coord) || coord.equals(startPosition) && kingDefeated;
+		return (isAvailableCoord(coord) && !fires.containsKey(coord) || coord.equals(startPosition) && kingDefeated) && moveCount < MAX_MOVE_COUNT;
 	}
 
 	public Board moveKhignt(Coord newCoord){
@@ -51,6 +53,7 @@ public class Board
 		board.setKnight(new Knight(newCoord));
 		board.setKing(this.getKing());
 		board.setKingDefeated(this.isKingDefeated());
+		board.setMoveCount(this.getMoveCount() + 1);
 		if(!board.kingDefeated){
 			if(board.checkKingDefeat())
 				board.kingDefeated = true;
