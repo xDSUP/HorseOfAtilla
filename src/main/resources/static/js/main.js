@@ -174,7 +174,7 @@ $(document).ready(function () {
       data: JSON.stringify({fire: json.fire, king: json.king, horse: json.horseStartPostiton, findType: json.findType}),
       success: function(data){
         json.path = data.path;
-        $(".state").html(`Success! Time: ${data.nanoTime} nanosec.`);
+        $(".state").html(`Success! Time: ${data.nanoTime / 1000000} ms.`);
         currentPos = 0;
         refresh();
       },
