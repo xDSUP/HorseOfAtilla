@@ -171,7 +171,7 @@ $(document).ready(function () {
       method: 'post',
       contentType: 'application/json',
       dataType: 'json',
-      data: JSON.stringify({fire: json.fire, king: json.king, horse: json.horseStartPostiton, findType: json.findType}),
+      data: JSON.stringify({fire: json.fire, king: json.king, horse: json.horseStartPostiton, findType: json.findType, maxMoveCount: parseInt($('#maxDepth')[0].value)}),
       success: function(data){
         json.path = data.path;
         $(".state").html(`Success! Time: ${data.nanoTime / 1000000} ms.`);

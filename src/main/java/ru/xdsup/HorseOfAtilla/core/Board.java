@@ -3,7 +3,6 @@ package ru.xdsup.HorseOfAtilla.core;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.extern.log4j.Log4j2;
 import ru.xdsup.HorseOfAtilla.Utils;
 import ru.xdsup.HorseOfAtilla.core.figures.Coord;
 import ru.xdsup.HorseOfAtilla.core.figures.Figure;
@@ -30,7 +29,6 @@ public class Board
 	private boolean kingDefeated;
 	private String prevMoves;
 	private int moveCount = 0;
-	private static final int MAX_MOVE_COUNT = 18;
 
 	public void addFire(Figure figure){
 		fires.put(figure.getCoords(), figure);
@@ -42,7 +40,7 @@ public class Board
 	}
 
 	public boolean isAvailableMove(Coord coord){
-		return (isAvailableCoord(coord) && !fires.containsKey(coord) || coord.equals(startPosition) && kingDefeated) && moveCount < MAX_MOVE_COUNT;
+		return isAvailableCoord(coord) && !fires.containsKey(coord) || coord.equals(startPosition) && kingDefeated;
 	}
 
 	public Board moveKhignt(Coord newCoord){
