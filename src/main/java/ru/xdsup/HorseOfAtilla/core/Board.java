@@ -3,6 +3,7 @@ package ru.xdsup.HorseOfAtilla.core;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.extern.log4j.Log4j2;
 import ru.xdsup.HorseOfAtilla.Utils;
 import ru.xdsup.HorseOfAtilla.core.figures.Coord;
 import ru.xdsup.HorseOfAtilla.core.figures.Figure;
@@ -26,8 +27,8 @@ public class Board
 	private Knight knight;
 	private King king;
 	private HashMap<Coord, Figure> fires = new HashMap<>();
-	private Board prevState;
 	private boolean kingDefeated;
+	private String prevMoves;
 
 	public void addFire(Figure figure){
 		fires.put(figure.getCoords(), figure);
@@ -54,7 +55,7 @@ public class Board
 			if(board.checkKingDefeat())
 				board.kingDefeated = true;
 		}
-		board.setPrevState(this);
+		board.setPrevMoves(this.toString());
 		return board;
 	}
 
@@ -112,8 +113,7 @@ public class Board
 	@Override
 	public String toString(){
 		String coord = Utils.toChessNotation(knight.getCoords());
-		String otherMoves =  prevState != null ? "-" + prevState.toString() : "";
-		return coord + otherMoves;
+		return prevMoves != null ? coord + "-" + prevMoves : coord;
 	}
 
 	public String toStrArray(){
