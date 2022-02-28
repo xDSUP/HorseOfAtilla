@@ -5,6 +5,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class AtillaServiceFactory {
     public AtillaService getService(AtillaService.Mode mode){
-        return new AtillaService();
+        return new AtillaService(mode);
     }
 }

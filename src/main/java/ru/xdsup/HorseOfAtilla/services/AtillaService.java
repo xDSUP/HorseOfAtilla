@@ -37,7 +37,7 @@ public class AtillaService
 			potentialState = getPotentialState();
 			counter++;
 
-			if(counter % 500 == 0)
+			if(counter % 1000 == 0)
 				log.info("Обработано " + counter + " вершин");
 
 			//2.2 проверяем на соответст целевому состоянию
