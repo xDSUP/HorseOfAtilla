@@ -48,6 +48,7 @@ public class AtillaController {
                 .map(Utils::toChessNotation)
                 .collect(Collectors.toMap(entry -> entry, entry -> new Figure((Coord) entry), (prev, next) -> next, HashMap::new)));
         AtillaService service = "queue".equals(request.getFindType()) ? factory.getService(AtillaService.Mode.QUEUE) : factory.getService(AtillaService.Mode.STACK);
+        service.setMaxMoveCount(request.getMaxMoveCount());
         val response = new AtillaResponse();
         response.setKing(request.getKing());
         response.setFire(request.getFire());

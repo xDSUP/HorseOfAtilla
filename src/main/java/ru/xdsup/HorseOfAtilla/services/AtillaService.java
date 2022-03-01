@@ -1,5 +1,6 @@
 package ru.xdsup.HorseOfAtilla.services;
 
+import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 import ru.xdsup.HorseOfAtilla.core.Board;
 import ru.xdsup.HorseOfAtilla.core.figures.Knight;
@@ -12,7 +13,9 @@ public class AtillaService
 {
 	public enum Mode {QUEUE, STACK}
 	private final Mode mode;
-	private long counter;
+
+	@Setter
+	private int maxMoveCount = 100000;
 
 	private final Deque<Board> potentialStates = new LinkedList<>();
 
@@ -26,7 +29,7 @@ public class AtillaService
 
 	public String analyze(Board board)
 	{
-		counter = 0;
+		long counter = 0;
 		//1 - помещаем в список открытых вершин нач сост
 		potentialStates.addFirst(board);
 		Board potentialState;
@@ -66,6 +69,8 @@ public class AtillaService
 
 	private void generatePotentialStates(Board board)
 	{
+		if (board.getMoveCount() > maxMoveCount)
+			return;
 		Knight.getAvailablePoints(board.getKnight().getCoords()).stream()
 				.filter(board::isAvailableMove)
 				.map(board::moveKhignt)
