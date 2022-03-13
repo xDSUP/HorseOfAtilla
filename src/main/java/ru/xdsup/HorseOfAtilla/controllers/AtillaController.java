@@ -53,8 +53,11 @@ public class AtillaController {
         response.setFire(request.getFire());
         val stopwatch = new StopWatch();
         stopwatch.start();
-        response.setPath(Utils.chessNotationToArray(service.analyze(board)));
+        String resolve = service.analyze(board);
         stopwatch.stop();
+        Boolean isResolved = resolve != null;
+        if(isResolved) response.setPath(Utils.chessNotationToArray(resolve));
+        response.setIsResolved(isResolved);
         response.setNanoTime(stopwatch.getNanoTime());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
