@@ -41,14 +41,23 @@ public abstract class AtillaBaseSolverService implements AtillaSolverService
 		return null;
 	}
 
+	/** Возвращает следующее состояние из поиска (списка открытых вершин) и удаляет ее.
+	 * @return Удаленное состояние.
+	 */
 	protected abstract Board getPotentialState();
 
 	protected boolean isEndState(Board state){
 		return state.isEndState();
 	}
 
+	/** Добавляет новое состояние в список открытых вершин.
+	 * @param board Новое состояние.
+	 */
 	protected abstract void addPotentialState(Board board);
 
+	/** Возвращает количество вершин в списке открытых вершин.
+	 * @return Количество вершин в списке открытых вершин.
+	 */
 	protected abstract int getCountPotentialStates();
 
 	protected void generatePotentialStates(Board board)
