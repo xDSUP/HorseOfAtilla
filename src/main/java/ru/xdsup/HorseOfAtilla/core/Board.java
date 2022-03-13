@@ -1,5 +1,7 @@
 package ru.xdsup.HorseOfAtilla.core;
 
+import java.util.HashSet;
+import java.util.Set;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,7 +14,6 @@ import ru.xdsup.HorseOfAtilla.core.figures.Knight;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.HashMap;
 
 @Getter
 @Setter
@@ -25,13 +26,13 @@ public class Board
 	private Coord startPosition;
 	private Knight knight;
 	private King king;
-	private HashMap<Coord, Figure> fires = new HashMap<>();
+	private Set<Coord> fires = new HashSet<>();
 	private boolean kingDefeated;
 	private String prevMoves;
 	private int moveCount = 0;
 
 	public void addFire(Figure figure){
-		fires.put(figure.getCoords(), figure);
+		fires.add(figure.getCoords());
 	}
 
 	public boolean isAvailableCoord(Coord coord)
@@ -40,13 +41,13 @@ public class Board
 	}
 
 	public boolean isAvailableMove(Coord coord){
-		return isAvailableCoord(coord) && !fires.containsKey(coord) || coord.equals(startPosition) && kingDefeated;
+		return isAvailableCoord(coord) && !fires.contains(coord) || coord.equals(startPosition) && kingDefeated;
 	}
 
 	public Board moveKhignt(Coord newCoord){
 		Board board = new Board();
 		board.setStartPosition(startPosition);
-		board.setFires(new HashMap<>(fires));
+		board.setFires(new HashSet<>(fires));
 		board.addFire( new Figure(knight.getCoords()));
 		board.setKnight(new Knight(newCoord));
 		board.setKing(this.getKing());
@@ -66,6 +67,7 @@ public class Board
 
 	public boolean isEndState(){
 		return kingDefeated && knight.getCoords().equals(startPosition);
+		//return kingDefeated;
 	}
 
 	static public Board from(String str)

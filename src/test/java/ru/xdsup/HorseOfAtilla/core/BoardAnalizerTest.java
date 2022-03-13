@@ -44,6 +44,25 @@ public class BoardAnalizerTest
 	public void testHardBoard()
 	{
 		Board board = Board.from("" +
+				"K2345678\n" +
+				"12345678\n" +
+				"12345678\n" +
+				"12345678\n" +
+				"12345678\n" +
+				"12345678\n" +
+				"12345678\n" +
+				"1234567W");
+		AtillaService boardAnalizer = new AtillaService();
+		String result = boardAnalizer.analyze(board);
+		System.out.println(result);
+		System.out.println(Utils.toStrArray(result));
+		assertEquals(result, "G4-F6-E8-G7-E6-F8-G6-E7-C6-A5-B3-D2-B1-A3-B5-D6-F7-H6-G4");
+	}
+
+	@Test
+	public void testHardBoard2()
+	{
+		Board board = Board.from("" +
 				"1FFF56FF\n" +
 				"FFFF567F\n" +
 				"12345678\n" +
