@@ -8,4 +8,5 @@ public class AtillaResponse {
     String king;
     String[] path;
     Long nanoTime;
+    Boolean isResolved;
 }

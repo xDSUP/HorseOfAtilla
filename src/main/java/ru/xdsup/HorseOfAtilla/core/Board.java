@@ -5,6 +5,7 @@ import java.util.Set;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.commons.lang3.NotImplementedException;
 import ru.xdsup.HorseOfAtilla.Utils;
 import ru.xdsup.HorseOfAtilla.core.figures.Coord;
 import ru.xdsup.HorseOfAtilla.core.figures.Figure;
@@ -121,5 +122,12 @@ public class Board
 	public String toStrArray(){
 		String chessNotation = toString();
 		return "\"" + chessNotation.replace("-", "\", \"")+ "\"";
+	}
+
+	public long getHeuristic() {
+		long heuristic = 0;
+		if (kingDefeated) heuristic += 1000;
+		throw new NotImplementedException();
+		//return heuristic;
 	}
 }

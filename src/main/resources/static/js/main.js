@@ -173,10 +173,15 @@ $(document).ready(function () {
       dataType: 'json',
       data: JSON.stringify({fire: json.fire, king: json.king, horse: json.horseStartPostiton, findType: json.findType, maxMoveCount: parseInt($('#maxDepth')[0].value)}),
       success: function(data){
-        json.path = data.path;
-        $(".state").html(`Success! Time: ${data.nanoTime / 1000000} ms.`);
-        currentPos = 0;
-        refresh();
+        if(!data.isResolved){
+          $(".state").html(`Resolve not found! Time: ${data.nanoTime / 1000000} ms.`);
+        }
+        else {
+          json.path = data.path;
+          $(".state").html(`Success! Time: ${data.nanoTime / 1000000} ms.`);
+          currentPos = 0;
+          refresh();
+        }
       },
       statusCode: {
         500: function(data) {
