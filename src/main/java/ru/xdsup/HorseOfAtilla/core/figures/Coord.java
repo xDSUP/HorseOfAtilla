@@ -23,6 +23,36 @@ public class Coord
 		move(coord.getX(), coord.getY());
 	}
 
+	public Coord add(int d)
+	{
+		return new Coord(x + d, y + d);
+	}
+
+	public Coord sub(int d)
+	{
+		return new Coord(x - d, y - d);
+	}
+
+	public Coord add(Coord coord)
+	{
+		return new Coord(x + coord.getX(), y + coord.getY());
+	}
+
+	public Coord sub(Coord coord)
+	{
+		return new Coord(x - coord.getX(), y - coord.getY());
+	}
+
+	public Coord mul(int cl)
+	{
+		return new Coord(x * cl, y * cl);
+	}
+
+	public Coord div(int cl)
+	{
+		return new Coord(x / cl, y / cl);
+	}
+
 	@Override
 	public boolean equals(Object o)
 	{
