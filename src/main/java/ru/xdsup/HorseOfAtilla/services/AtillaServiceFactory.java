@@ -4,7 +4,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AtillaServiceFactory {
-    public AtillaService getService(AtillaService.Mode mode){
-        return new AtillaService(mode);
+    public AtillaSolverService getQueueService(){
+        return new AtillaSolverWithQueueService();
+    }
+
+    public AtillaSolverService getStackService(int maxCountSteps){
+        return new AtillaSolverWithStackService(maxCountSteps);
     }
 }

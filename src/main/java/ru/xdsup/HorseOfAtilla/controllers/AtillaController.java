@@ -13,11 +13,12 @@ import ru.xdsup.HorseOfAtilla.core.figures.King;
 import ru.xdsup.HorseOfAtilla.core.figures.Knight;
 import ru.xdsup.HorseOfAtilla.dto.AtillaRequest;
 import ru.xdsup.HorseOfAtilla.dto.AtillaResponse;
-import ru.xdsup.HorseOfAtilla.services.AtillaService;
+import ru.xdsup.HorseOfAtilla.services.AtillaSolverWithQueueService;
 import ru.xdsup.HorseOfAtilla.services.AtillaServiceFactory;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
+import ru.xdsup.HorseOfAtilla.services.AtillaSolverService;
 
 @Controller
 public class AtillaController {
@@ -44,8 +45,9 @@ public class AtillaController {
         board.setFires(Arrays.stream(request.getFire())
                 .map(Utils::fromChessNotation)
                 .collect(Collectors.toSet()));
-        AtillaService service = "queue".equals(request.getFindType()) ? factory.getService(AtillaService.Mode.QUEUE) : factory.getService(AtillaService.Mode.STACK);
-        service.setMaxMoveCount(request.getMaxMoveCount());
+        AtillaSolverService service = "queue".equals(request.getFindType())
+                ? factory.getQueueService()
+                : factory.getStackService(request.getMaxMoveCount());
         val response = new AtillaResponse();
         response.setKing(request.getKing());
         response.setFire(request.getFire());

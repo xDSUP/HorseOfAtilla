@@ -67,7 +67,6 @@ public class Board
 
 	public boolean isEndState(){
 		return kingDefeated && knight.getCoords().equals(startPosition);
-		//return kingDefeated;
 	}
 
 	static public Board from(String str)

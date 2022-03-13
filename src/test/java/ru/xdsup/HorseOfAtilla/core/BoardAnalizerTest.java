@@ -2,7 +2,7 @@ package ru.xdsup.HorseOfAtilla.core;
 
 import org.junit.Test;
 import ru.xdsup.HorseOfAtilla.Utils;
-import ru.xdsup.HorseOfAtilla.services.AtillaService;
+import ru.xdsup.HorseOfAtilla.services.AtillaSolverWithQueueService;
 
 import static org.junit.Assert.*;
 
@@ -20,7 +20,7 @@ public class BoardAnalizerTest
 				"12345678\n" +
 				"12345678\n" +
 				"12345678");
-		AtillaService boardAnalizer = new AtillaService();
+		AtillaSolverWithQueueService boardAnalizer = new AtillaSolverWithQueueService();
 		assertEquals( boardAnalizer.analyze(board), "D6-E4-D6");
 	}
 
@@ -36,7 +36,7 @@ public class BoardAnalizerTest
 				"12345678\n" +
 				"12K45678\n" +
 				"W2345678");
-		AtillaService boardAnalizer = new AtillaService();
+		AtillaSolverWithQueueService boardAnalizer = new AtillaSolverWithQueueService();
 		assertEquals( boardAnalizer.analyze(board), "C2-A1-C2");
 	}
 
@@ -52,7 +52,7 @@ public class BoardAnalizerTest
 				"12345678\n" +
 				"12345678\n" +
 				"1234567W");
-		AtillaService boardAnalizer = new AtillaService();
+		AtillaSolverWithQueueService boardAnalizer = new AtillaSolverWithQueueService();
 		String result = boardAnalizer.analyze(board);
 		System.out.println(result);
 		System.out.println(Utils.toStrArray(result));
@@ -71,7 +71,7 @@ public class BoardAnalizerTest
 				"1WFF5F78\n" +
 				"12F4567F\n" +
 				"F2F45F78");
-		AtillaService boardAnalizer = new AtillaService();
+		AtillaSolverWithQueueService boardAnalizer = new AtillaSolverWithQueueService();
 		String result = boardAnalizer.analyze(board);
 		System.out.println(result);
 		System.out.println(Utils.toStrArray(result));
