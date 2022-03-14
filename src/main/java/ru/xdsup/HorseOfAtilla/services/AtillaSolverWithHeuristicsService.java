@@ -1,5 +1,6 @@
 package ru.xdsup.HorseOfAtilla.services;
 
+import com.google.common.collect.MinMaxPriorityQueue;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.PriorityQueue;
@@ -14,13 +15,15 @@ import ru.xdsup.HorseOfAtilla.core.figures.Coord;
 @Log4j2
 public class AtillaSolverWithHeuristicsService extends AtillaBaseSolverService
 {
-	private final PriorityQueue<Board> potentialStates;
+	private final MinMaxPriorityQueue<Board> potentialStates;
 	private final Set<Coord> checkedCoords = new HashSet<>();
 	private boolean kingDefeated;
 
-	public AtillaSolverWithHeuristicsService(int initialCapacity, Function<Board, Integer> heuristic)
+	public AtillaSolverWithHeuristicsService(int maxSizeQueue, Function<Board, Integer> heuristic)
 	{
-		this.potentialStates = new PriorityQueue<>(initialCapacity, Comparator.comparingInt(heuristic::apply));
+		this.potentialStates = MinMaxPriorityQueue.<Board>orderedBy(Comparator.comparingInt(heuristic::apply))
+				.maximumSize(maxSizeQueue)
+				.create();
 	}
 
 	@Override
