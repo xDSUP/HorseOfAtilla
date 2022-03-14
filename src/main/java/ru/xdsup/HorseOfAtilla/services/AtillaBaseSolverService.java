@@ -43,7 +43,6 @@ public abstract class AtillaBaseSolverService implements AtillaSolverService
 		} while (getCountPotentialStates() > 0);
 		//3 решения нет
 		log.info("решения нет");
-
 		return null;
 	}
 

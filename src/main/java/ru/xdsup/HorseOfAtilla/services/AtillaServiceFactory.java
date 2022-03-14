@@ -34,13 +34,14 @@ public class AtillaServiceFactory {
 
     public AtillaSolverService getHeuristicsService3(){
         // эвристика "Метрика коня" http://kvant.mccme.ru/1981/10/metrika_konya.htm
-        return new AtillaSolverWithHeuristicsService(12, board -> {
+        return new AtillaSolverWithHeuristicsService(1200, board -> {
             Coord start = board.getKnight().getCoords();
             Coord end = board.isKingDefeated()
                     ? board.getStartPosition()
                     : board.getKing().getCoords();
             // TODO: доделать
-            return board.getMoveCount();
+            return start.getHorseRange(end);
+            //return board.getMoveCount();
         });
     }
 }
