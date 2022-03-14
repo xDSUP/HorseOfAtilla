@@ -1,9 +1,13 @@
 package ru.xdsup.HorseOfAtilla.services;
 
+import lombok.extern.log4j.Log4j2;
+import lombok.val;
+import lombok.var;
 import org.springframework.stereotype.Service;
 import ru.xdsup.HorseOfAtilla.core.figures.Coord;
 
 @Service
+@Log4j2
 public class AtillaServiceFactory {
     public AtillaSolverService getQueueService(){
         return new AtillaSolverWithQueueService();
@@ -13,35 +17,35 @@ public class AtillaServiceFactory {
         return new AtillaSolverWithStackService(maxCountSteps);
     }
 
+    public static final int maxSize = 500;
+    public static final int KING_NOT_DEFEAT_POINT = 100;
+
     public AtillaSolverService getHeuristicsService(){
         // эвристика манхэттенское расстояние
-        return new AtillaSolverWithHeuristicsService(12, board -> {
+        return new AtillaSolverWithHeuristicsService(maxSize, board -> {
             Coord start = board.getKnight().getCoords();
             Coord end = board.isKingDefeated()
                     ? board.getStartPosition()
                     : board.getKing().getCoords();
             int length = Math.abs(start.getX() - end.getX()) + Math.abs(start.getY() - end.getY());
-            return board.getMoveCount() + length;
-        });
-    }
-
-    public AtillaSolverService getHeuristicsService2(){
-        // такая эвристика даёт обычный поиск в ширину
-        return new AtillaSolverWithHeuristicsService(12, board -> {
-            return board.getMoveCount();
+            int kingDefeatedPoints = board.isKingDefeated() ? 0 : KING_NOT_DEFEAT_POINT;
+            int result = board.getMoveCount() + length + kingDefeatedPoints;
+            return result;
         });
     }
 
     public AtillaSolverService getHeuristicsService3(){
         // эвристика "Метрика коня" http://kvant.mccme.ru/1981/10/metrika_konya.htm
-        return new AtillaSolverWithHeuristicsService(1200, board -> {
+        return new AtillaSolverWithHeuristicsService(maxSize, board -> {
             Coord start = board.getKnight().getCoords();
             Coord end = board.isKingDefeated()
                     ? board.getStartPosition()
                     : board.getKing().getCoords();
             // TODO: доделать
-            return start.getHorseRange(end);
-            //return board.getMoveCount();
+            var range = start.getHorseRange(end);
+            range += board.isKingDefeated() ? 0 : KING_NOT_DEFEAT_POINT;
+            //log.info("Расстояние" + range + "; путь" + board);
+            return range;
         });
     }
 }

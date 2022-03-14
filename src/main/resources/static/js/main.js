@@ -173,12 +173,17 @@ $(document).ready(function () {
       dataType: 'json',
       data: JSON.stringify({fire: json.fire, king: json.king, horse: json.horseStartPostiton, findType: json.findType, maxMoveCount: parseInt($('#maxDepth')[0].value)}),
       success: function(data){
+        let statistic = `Время: ${data.statistic.nanoTime / 1000000} миллисекунд.<br>
+         Состояний сгенерировано  ${data.statistic.statesGenerate}.<br>
+         Состояний обработано ${data.statistic.statesHandled}.<br>
+         Число ходов ${data.statistic.moves}.`;
+
         if(!data.isResolved){
-          $(".state").html(`Resolve not found! Time: ${data.nanoTime / 1000000} ms.`);
+          $(".state").html(`Resolve not found!<br><br>${statistic}`);
         }
         else {
           json.path = data.path;
-          $(".state").html(`Success! Time: ${data.nanoTime / 1000000} ms.`);
+          $(".state").html(`Success!<br><br>${statistic}`);
           currentPos = 0;
           refresh();
         }
@@ -204,6 +209,10 @@ $(document).ready(function () {
   });
   $("#getHeuristicQueue").click(() => {
     json.findType = "heuristic";
+    getSolve();
+  });
+  $("#getHeuristicQueue3").click(() => {
+    json.findType = "heuristic3";
     getSolve();
   });
   $("#fire").click(() => activeFigure = figures.fire);

@@ -86,34 +86,41 @@ public class Coord
 		switch (vector){
 			case 0:
 				return 0;
-			case 12:
 			case 21:
 				return 1;
-			case 2:
 			case 11:
 			case 20:
 			case 40:
 			case 31:
-			case 13:
-			case 4:
 			case 42:
 			case 33:
-			case 24:
 				return 2;
-			case 1:
 			case 10:
-			case 3:
 			case 30:
 			case 41:
 			case 32:
-			case 23:
-			case 14:
 			case 43:
-			case 34:
+			case 50:
+			case 52:
+			case 54:
+			case 61:
+			case 63:
 				return 3;
 			case 22:
 			case 44:
+			case 51:
+			case 53:
+			case 55:
+			case 60:
+			case 62:
+			case 64:
+			case 66:
+			case 71:
+			case 73:
+			case 75:
 				return 4;
+			case 77:
+				return 6;
 			default: return 5;
 		}
 	}

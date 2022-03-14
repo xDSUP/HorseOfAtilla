@@ -48,6 +48,8 @@ public class AtillaController {
         AtillaSolverService service = "queue".equals(request.getFindType())
                 ? factory.getQueueService()
                 : "heuristic".equals(request.getFindType())
+                ? factory.getHeuristicsService()
+                : "heuristic3".equals(request.getFindType())
                 ? factory.getHeuristicsService3()
                 : factory.getStackService(request.getMaxMoveCount());
         val response = new AtillaResponse();
@@ -57,10 +59,12 @@ public class AtillaController {
         stopwatch.start();
         String resolve = service.analyze(board);
         stopwatch.stop();
+        val statistic = service.getStatistic();
         Boolean isResolved = resolve != null;
+        statistic.nanoTime = stopwatch.getNanoTime();
         if(isResolved) response.setPath(Utils.chessNotationToArray(resolve));
         response.setIsResolved(isResolved);
-        response.setNanoTime(stopwatch.getNanoTime());
+        response.setStatistic(statistic);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

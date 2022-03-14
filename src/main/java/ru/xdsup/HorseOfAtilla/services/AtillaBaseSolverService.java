@@ -35,6 +35,7 @@ public abstract class AtillaBaseSolverService implements AtillaSolverService
 			//2.2 проверяем на соответст целевому состоянию
 			if(isEndState(potentialState)){
 					log.info("Решение найдено! Обработано " + statistic.statesHandled  + " вершин");
+					statistic.moves = potentialState.getMoveCount();
 					return potentialState.toString();
 			}
 			//2.3 помещаем в список закрытых вершин (в нашем случае просто удаляем из списка открытых)

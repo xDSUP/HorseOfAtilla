@@ -4,6 +4,6 @@ public class Statistic
 {
 	public long statesGenerate = 0;
 	public long statesHandled = 0;
-	public float time = 0;
-	public float moves = 0;
+	public long nanoTime = 0;
+	public long moves = 0;
 }
