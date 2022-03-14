@@ -1,9 +1,11 @@
 package ru.xdsup.HorseOfAtilla.services;
 
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import ru.xdsup.HorseOfAtilla.core.figures.Coord;
 
 @Service
+@Log4j2
 public class AtillaServiceFactory {
     public AtillaSolverService getQueueService(){
         return new AtillaSolverWithQueueService();
@@ -14,14 +16,18 @@ public class AtillaServiceFactory {
     }
 
     public AtillaSolverService getHeuristicsService(){
+        int KING_NOT_DEFEAT_POINT = 15;
         // эвристика манхэттенское расстояние
-        return new AtillaSolverWithHeuristicsService(12, board -> {
+        return new AtillaSolverWithHeuristicsService(50, board -> {
             Coord start = board.getKnight().getCoords();
             Coord end = board.isKingDefeated()
                     ? board.getStartPosition()
                     : board.getKing().getCoords();
             int length = Math.abs(start.getX() - end.getX()) + Math.abs(start.getY() - end.getY());
-            return board.getMoveCount() + length;
+            int kingDefeatedPoints = board.isKingDefeated() ? 0 : KING_NOT_DEFEAT_POINT;
+            int result = board.getMoveCount() + length + kingDefeatedPoints;
+            //log.info("board " + board.toString() + " оцнека - " + result);
+            return result;
         });
     }
 

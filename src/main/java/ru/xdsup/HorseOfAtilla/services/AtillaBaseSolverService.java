@@ -12,7 +12,7 @@ import ru.xdsup.HorseOfAtilla.core.figures.Knight;
 public abstract class AtillaBaseSolverService implements AtillaSolverService
 {
 	@Getter
-	Statistic statistic;
+	protected Statistic statistic;
 
 	@Override
 	public String analyze(Board initialState)
