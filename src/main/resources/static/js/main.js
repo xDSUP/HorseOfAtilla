@@ -202,6 +202,10 @@ $(document).ready(function () {
     json.findType = "queue";
     getSolve();
   });
+  $("#getHeuristicQueue").click(() => {
+    json.findType = "heuristic";
+    getSolve();
+  });
   $("#fire").click(() => activeFigure = figures.fire);
   $("#horse").click(() => activeFigure = figures.horse);
   $("#king").click(() => activeFigure = figures.king);

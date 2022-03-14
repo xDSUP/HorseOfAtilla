@@ -74,4 +74,49 @@ public class Coord
 	{
 		return Utils.toChessNotation(x, y);
 	}
+
+	public int getHorseRange(Coord to){
+		Coord subVector = sub(to);
+		Coord modSubVector = new Coord(Math.abs(subVector.getX()), Math.abs(subVector.getY()));
+		Coord fixedSubVector = new Coord(
+				Math.max(modSubVector.getX(), modSubVector.getY()),
+				Math.min(modSubVector.getX(), modSubVector.getY()));
+
+		int vector = fixedSubVector.getX() * 10 + fixedSubVector.getY();
+		switch (vector){
+			case 0:
+				return 0;
+			case 12:
+			case 21:
+				return 1;
+			case 2:
+			case 11:
+			case 20:
+			case 40:
+			case 31:
+			case 13:
+			case 4:
+			case 42:
+			case 33:
+			case 24:
+				return 2;
+			case 1:
+			case 10:
+			case 3:
+			case 30:
+			case 41:
+			case 32:
+			case 23:
+			case 14:
+			case 43:
+			case 34:
+				return 3;
+			case 22:
+			case 44:
+				return 4;
+			default: return 5;
+		}
+	}
+
+
 }
