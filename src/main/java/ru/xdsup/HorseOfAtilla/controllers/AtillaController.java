@@ -46,7 +46,7 @@ public class AtillaController {
                 .map(Utils::fromChessNotation)
                 .collect(Collectors.toSet()));
         AtillaSolverService service = "queue".equals(request.getFindType())
-                ? factory.getQueueService()
+                ? factory.getHeuristicsService()
                 : factory.getStackService(request.getMaxMoveCount());
         val response = new AtillaResponse();
         response.setKing(request.getKing());
