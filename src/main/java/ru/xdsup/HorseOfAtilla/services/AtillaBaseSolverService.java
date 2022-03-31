@@ -3,6 +3,7 @@ package ru.xdsup.HorseOfAtilla.services;
 import java.util.function.Predicate;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
+import ru.xdsup.HorseOfAtilla.Utils;
 import ru.xdsup.HorseOfAtilla.core.Board;
 import ru.xdsup.HorseOfAtilla.core.Statistic;
 import ru.xdsup.HorseOfAtilla.core.figures.Coord;
@@ -36,6 +37,8 @@ public abstract class AtillaBaseSolverService implements AtillaSolverService
 			if(isEndState(potentialState)){
 					log.info("Решение найдено! Обработано " + statistic.statesHandled  + " вершин");
 					statistic.moves = potentialState.getMoveCount();
+					statistic.averageBranchingFactor = 1 + (statistic.statesHandled-1.)/statistic.statesGenerate;
+					statistic.formula = Utils.getFormula(statistic.moves, statistic.statesHandled);
 					return potentialState.toString();
 			}
 			//2.3 помещаем в список закрытых вершин (в нашем случае просто удаляем из списка открытых)

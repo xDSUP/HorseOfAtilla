@@ -33,4 +33,11 @@ public class Utils
 	public static String[] chessNotationToArray(String chessNotation){
 		return chessNotation.split("-");
 	}
+
+	public static String getFormula(long depth, long countNodes) {
+		String x = "";
+		for (long i = depth; i != 0; i--)
+			x += "x^" + i + "+";
+		return x + countNodes + "=0";
+	}
 }

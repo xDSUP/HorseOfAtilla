@@ -176,7 +176,9 @@ $(document).ready(function () {
         let statistic = `Время: ${data.statistic.nanoTime / 1000000} миллисекунд.<br>
          Состояний сгенерировано  ${data.statistic.statesGenerate}.<br>
          Состояний обработано ${data.statistic.statesHandled}.<br>
-         Число ходов ${data.statistic.moves}.`;
+         Число ходов ${data.statistic.moves}.<br>
+         AverageBranchingFactor ${data.statistic.averageBranchingFactor}<br>
+         Formula ${data.statistic.formula}`;
 
         if(!data.isResolved){
           $(".state").html(`Resolve not found!<br><br>${statistic}`);
